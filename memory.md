@@ -11,7 +11,7 @@
 **Repo:** https://github.com/kushalmanshrestha789/llama-chat-gui
 **Local path:** `/home/cipher/projects/llama-chat-gui`
 **Stack:** Python 3 · Tkinter (UI) · `llama-cli` subprocess (engine) · `pystray` (tray) · `psutil` (telemetry)
-**Last commit:** `36aec70` — Add MIT license and Python .gitignore
+**Last commit:** `64b8263` — feat: add platform_compat.py for cross-platform paths and OS detection
 **Last tag:** _none_
 
 ---
@@ -22,7 +22,7 @@
 
 **Execution order** (see `AGENT_GUIDE.md` and the Windows port plan in chat history for detail):
 
-1. Create `platform_compat.py` with path / theme / GPU helpers
+1. ~~Create `platform_compat.py` with path / theme / GPU helpers~~ ✅ Done in `64b8263`
 2. Swap call sites in `llama_controller.py`, `llama_gui.py`, `web_tools.py`
 3. Smoke-test on Linux (must not regress)
 4. Document Windows install/run in `README.md`
@@ -63,7 +63,8 @@
 | `.gitignore` | Python + llama.cpp patterns | ✅ Done |
 | `memory.md` | This file — live project state | ✅ Now |
 | `history.md` | Chronological build log | ✅ Now |
-| `platform_compat.py` | _new_ — cross-platform helpers | 🔜 Next |
+| `platform_compat.py` | cross-platform paths, dark-mode, nvidia-smi, subprocess flags | ✅ Done in `64b8263`, smoke-tested on Linux |
+| _(call-site swap)_ | replace hardcoded constants in the 3 source files with helpers | 🔜 Next |
 
 ---
 

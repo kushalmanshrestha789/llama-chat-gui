@@ -4,11 +4,20 @@
 
 ---
 
+## 2026-07-03 — `platform_compat.py` lands (Windows port step 1)
+
+**Commit:** `64b8263` — feat: add platform_compat.py for cross-platform paths and OS detection
+
+- New module, 240 lines, no Tkinter imports
+- Centralises: `config_dir`, `data_dir`, `documents_dir`, `models_root`, `history_dir`, `benchmark_dir`, `nvidia_smi_cmd`, `subprocess_no_window_kwargs`, `is_dark_mode`
+- Smoke-tested on Linux: every helper returns the same path as the existing hardcoded constants → no regression
+- `is_dark_mode()` returned `True` on the current Linux system (gsettings reports `prefer-dark`)
+
 ## 2026-07-03 — GitHub release + cross-platform prep
 
 **Commits:**
 - `36aec70` — Add MIT license and Python .gitignore
-- (this commit introduces `memory.md` and `history.md`)
+- `b6a5a23` — chore: add memory.md and history.md for project state tracking
 
 **Highlights:**
 - Project uploaded to GitHub: https://github.com/kushalmanshrestha789/llama-chat-gui
