@@ -11,7 +11,7 @@
 **Repo:** https://github.com/kushalmanshrestha789/llama-chat-gui
 **Local path:** `/home/cipher/projects/llama-chat-gui`
 **Stack:** Python 3 · Tkinter (UI) · `llama-cli` subprocess (engine) · `pystray` (tray) · `psutil` (telemetry)
-**Last commit:** `c01df2f` — refactor: route all OS-specific code through platform_compat
+**Last commit:** `5a56196` — docs: add Windows install + run section, fix stale GTK/note language
 **Last tag:** _none_
 
 ---
@@ -24,9 +24,9 @@
 
 1. ~~Create `platform_compat.py` with path / theme / GPU helpers~~ ✅ Done in `64b8263`
 2. ~~Swap call sites in `llama_controller.py`, `llama_gui.py`, `web_tools.py`~~ ✅ Done in `c01df2f`
-3. Smoke-test on Linux (must not regress) — ✅ Done in `c01df2f` (caught and fixed the `models_root()` bug)
-4. Document Windows install/run in `README.md`
-5. Hand off to Windows machine for visual validation
+3. ~~Smoke-test on Linux (must not regress)~~ ✅ Done in `c01df2f` (caught and fixed the `models_root()` bug)
+4. ~~Document Windows install/run in `README.md`~~ ✅ Done in `5a56196` (full cross-platform install + Windows notes + PyInstaller)
+5. **Hand off to Windows machine for visual validation** ← you are here
 
 ---
 
@@ -43,9 +43,7 @@
 
 ## Open Blockers
 
-- **No Windows machine available for testing in this session.** Linux smoke-test must pass before handing off. Document a clear Windows install/run path in `README.md` so the handoff is frictionless.
-- **Tk theme rendering on Windows HiDPI is unverified.** May need `ctypes.windll.shcore.SetProcessDpiAwareness(1)`. Flag in `AGENT_GUIDE.md` once known.
-- **`nvidia-smi.exe` may not be on PATH on many Windows machines.** Need a "Locate nvidia-smi" setting or graceful degradation (already partially handled by `try/except`).
+- **No Windows machine available for testing in this session.** README + `platform_compat.py` are in place; visual validation is the last open item. When the user runs it on Windows, any Tk HiDPI / theme / tray quirks should be filed as bug-fix commits and the resolution recorded in `AGENT_GUIDE.md` under a new "Windows" pitfalls section.
 
 ---
 
@@ -65,6 +63,8 @@
 | `history.md` | Chronological build log | ✅ Now |
 | `platform_compat.py` | cross-platform paths, dark-mode, nvidia-smi, subprocess flags | ✅ Done in `64b8263`, smoke-tested on Linux |
 | _(call-site swap)_ | replace hardcoded constants in the 3 source files with helpers | ✅ Done in `c01df2f` (also caught & fixed `models_root()` bug) |
+| _(Windows docs)_ | full cross-platform install + run + PyInstaller in README.md | ✅ Done in `5a56196` |
+| _(Windows validation)_ | first run on a real Windows machine; file bug-fix commits for any HiDPI / tray / theme issues | ⏳ Awaiting user handoff |
 
 ---
 

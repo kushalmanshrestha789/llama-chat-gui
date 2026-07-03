@@ -4,6 +4,17 @@
 
 ---
 
+## 2026-07-03 — README: Windows install + run section
+
+**Commit:** `5a56196` — docs: add Windows install + run section, fix stale GTK/note language
+
+- Rewrote the placeholder "see AGENT_GUIDE.md for the Windows port plan" note as a real cross-platform install guide
+- Tightened stale wording ("Auto-detect GTK dark/light" → "Auto-detect system dark/light (gsettings on Linux, registry on Windows)")
+- Added `platform_compat.py` to the Architecture and Files tables
+- Rewrote the Data Storage section as a platform-aware table (Linux/XDG ↔ Windows)
+- New sections: Installation (prereq + common + Linux + Windows + notes + PyInstaller), Environment overrides (`LLAMA_CHAT_MODELS_DIR`), Development
+- **Unblocks the Windows handoff** — a user with no prior knowledge of the project can install and run on either OS from the README
+
 ## 2026-07-03 — Refactor: route all OS code through `platform_compat`
 
 **Commit:** `c01df2f` — refactor: route all OS-specific code through platform_compat
