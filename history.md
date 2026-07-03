@@ -4,6 +4,15 @@
 
 ---
 
+## 2026-07-03 — AI validation prompt
+
+**Commit:** `b40e54b` — docs: add AI_VALIDATION_PROMPT.md and link from README
+
+- New `AI_VALIDATION_PROMPT.md` — a self-contained prompt any capable AI can run to clone, install, and test the repo, then return a structured pass/fail report
+- Enforces a fixed Markdown report shape with a derived verdict (PASS / PARTIAL_PASS / FAIL / SKIPPED) so verification is consistent across runs
+- Documented when to re-run (after `feat:` / `refactor:` commits, before release tags) and when not to (docs-only / chore-only)
+- README gains a one-paragraph "Validation" section linking to the new file
+
 ## 2026-07-03 — README: Windows install + run section
 
 **Commit:** `5a56196` — docs: add Windows install + run section, fix stale GTK/note language

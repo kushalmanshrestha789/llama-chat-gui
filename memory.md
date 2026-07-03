@@ -11,7 +11,7 @@
 **Repo:** https://github.com/kushalmanshrestha789/llama-chat-gui
 **Local path:** `/home/cipher/projects/llama-chat-gui`
 **Stack:** Python 3 · Tkinter (UI) · `llama-cli` subprocess (engine) · `pystray` (tray) · `psutil` (telemetry)
-**Last commit:** `5a56196` — docs: add Windows install + run section, fix stale GTK/note language
+**Last commit:** `b40e54b` — docs: add AI_VALIDATION_PROMPT.md and link from README
 **Last tag:** _none_
 
 ---
@@ -65,6 +65,7 @@
 | _(call-site swap)_ | replace hardcoded constants in the 3 source files with helpers | ✅ Done in `c01df2f` (also caught & fixed `models_root()` bug) |
 | _(Windows docs)_ | full cross-platform install + run + PyInstaller in README.md | ✅ Done in `5a56196` |
 | _(Windows validation)_ | first run on a real Windows machine; file bug-fix commits for any HiDPI / tray / theme issues | ⏳ Awaiting user handoff |
+| `AI_VALIDATION_PROMPT.md` | structured prompt to verify the project on any target OS via an AI | ✅ Done in `b40e54b` |
 
 ---
 
