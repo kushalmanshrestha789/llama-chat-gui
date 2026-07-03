@@ -128,3 +128,7 @@ Output appears in `dist\llama-chat-gui.exe`. Copy it anywhere; it's standalone.
 ## Development
 
 See [`AGENT_GUIDE.md`](AGENT_GUIDE.md) for architecture notes, common pitfalls, and how to add new `llama-cli` flags. For current project state see [`memory.md`](memory.md); for the build log see [`history.md`](history.md).
+
+## Validation
+
+[`AI_VALIDATION_PROMPT.md`](AI_VALIDATION_PROMPT.md) is a self-contained prompt you can paste into any capable AI assistant to have it clone, install, and test this repo on a target machine, then return a structured pass/fail report. Re-run it after every `feat:` or `refactor:` commit, and before any release tag.
