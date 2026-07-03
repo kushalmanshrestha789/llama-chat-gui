@@ -113,16 +113,26 @@ def documents_dir() -> Path:
 
 
 def models_root() -> Path:
-    """Root directory that holds downloaded GGUF models.
+    """Root directory that holds user-downloaded GGUF chat models.
 
-    Both Linux and Windows use ~/.lmstudio/models (LM Studio uses the
-    same location cross-platform), but we resolve via Path so the
-    glob engine downstream works portably.
+    Both Linux and Windows put user-downloaded models under
+    `~/.lmstudio/models/` (LM Studio's user tree). We deliberately
+    *don't* walk the whole `~/.lmstudio/` directory, because it also
+    contains `.internal/bundled-models/` (LM Studio's own embedding
+    models and other tooling) which we don't want surfaced as chat
+    model choices.
+
+    If a future user has models elsewhere, they can set the
+    LLAMA_CHAT_MODELS_DIR env var to override.
     """
+    override = os.environ.get("LLAMA_CHAT_MODELS_DIR")
+    if override:
+        return Path(override)
+
     if IS_WINDOWS:
         profile = os.environ.get("USERPROFILE", str(Path.home()))
         return Path(profile) / ".lmstudio" / "models"
-    return Path(os.path.expanduser("~/.lmstudio"))
+    return Path(os.path.expanduser("~/.lmstudio/models"))
 
 
 def history_dir() -> Path:

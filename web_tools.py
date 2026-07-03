@@ -1,11 +1,5 @@
 """Web search and fetch utilities for Llama-cpp Chat GUI Pro."""
 
-import sys
-
-_SYSTEM_SITE = "/usr/lib/python3.14/site-packages"
-if _SYSTEM_SITE not in sys.path:
-    sys.path.append(_SYSTEM_SITE)
-
 
 def search_web(query, max_results=5):
     """Search DuckDuckGo. Returns (success, formatted_string)."""

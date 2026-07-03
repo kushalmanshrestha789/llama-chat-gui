@@ -20,6 +20,13 @@ from llama_controller import (
 )
 
 import web_tools
+from platform_compat import (
+    is_dark_mode,
+    history_dir,
+    benchmark_dir,
+    models_root,
+    nvidia_smi_cmd,
+)
 
 try:
     import psutil
@@ -28,9 +35,9 @@ except ImportError:
     HAS_PSUTIL = False
 
 DEFAULT_MODEL_PATH = "/home/cipher/.lmstudio/models/lmstudio-community/gemma-4-E2B-it-GGUF/gemma-4-E2B-it-Q4_K_M.gguf"
-MODEL_SEARCH_PATH = os.path.expanduser("~/.lmstudio/models/**/*.gguf")
-HISTORY_DIR = os.path.expanduser("~/Documents/ChatArchive/llama_chat_project/history/")
-BENCHMARK_DIR = os.path.expanduser("~/.local/share/llama-chat/benchmarks/")
+# MODEL_SEARCH_PATH is derived at runtime — see _populate_models()
+HISTORY_DIR = str(history_dir()) + os.sep
+BENCHMARK_DIR = str(benchmark_dir()) + os.sep
 
 
 class ThemeManager:
@@ -40,14 +47,10 @@ class ThemeManager:
         self._update()
 
     def _detect_dark_mode(self):
-        try:
-            res = subprocess.check_output(
-                ["gsettings", "get", "org.gnome.desktop.interface", "color-scheme"],
-                text=True
-            ).strip()
-            return "dark" in res.lower()
-        except Exception:
-            return True
+        result = is_dark_mode()
+        if result is None:
+            return True  # default to dark if platform-specific source is unavailable
+        return result
 
     def _get_palette(self):
         if self.dark_mode:
@@ -848,7 +851,10 @@ class LlamaChatGUI(tk.Tk):
             session.apply_theme(colors)
 
     def _populate_models(self):
-        models = glob.glob(MODEL_SEARCH_PATH, recursive=True)
+        # Use pathlib.rglob for portable recursive search (POSIX '**' glob
+        # is fragile on Windows). Search the user's LM Studio model dir
+        # resolved via platform_compat.
+        models = sorted(str(p) for p in models_root().rglob("*.gguf"))
         if not models:
             models = [DEFAULT_MODEL_PATH]
         self.model_map = {os.path.basename(m): m for m in models}
@@ -1124,8 +1130,10 @@ class LlamaChatGUI(tk.Tk):
             gpu_str = ""
             try:
                 out = subprocess.check_output(
-                    ["nvidia-smi", "--query-gpu=utilization.gpu,memory.used,memory.total",
-                     "--format=csv,noheader,nounits"],
+                    nvidia_smi_cmd() + [
+                        "--query-gpu=utilization.gpu,memory.used,memory.total",
+                        "--format=csv,noheader,nounits",
+                    ],
                     text=True, timeout=2
                 ).strip()
                 gpu_util, mem_used, mem_total = out.split(", ")

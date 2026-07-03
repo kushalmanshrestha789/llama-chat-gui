@@ -5,10 +5,15 @@ import os
 import json
 import re
 import logging
+from pathlib import Path
 from PIL import Image, ImageDraw
 
-PROFILES_PATH = os.path.expanduser("~/.config/llama-chat-profiles.json")
-PRESETS_PATH = os.path.expanduser("~/.config/llama-chat-presets.json")
+from platform_compat import config_dir, subprocess_no_window_kwargs
+
+# Per-user config (Linux: ~/.config, Windows: %APPDATA%/llama-chat)
+_CONFIG_DIR = config_dir()
+PROFILES_PATH = str(_CONFIG_DIR / "llama-chat-profiles.json")
+PRESETS_PATH = str(_CONFIG_DIR / "llama-chat-presets.json")
 
 TIMING_RE = re.compile(
     r"(prompt eval|eval)\s+time.*?(\d+)\s+tokens.*?(\d+\.?\d*)\s+tokens per second",
@@ -118,6 +123,7 @@ class LlamaController:
                 stderr=subprocess.STDOUT,
                 text=True,
                 bufsize=1,
+                **subprocess_no_window_kwargs(),
             )
             threading.Thread(target=self._read_stdout, daemon=True).start()
             return True
