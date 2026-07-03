@@ -180,7 +180,7 @@ SKIPPED for the verdict.
 2. **Open a fresh AI session** (Claude, GPT, etc.) and paste the prompt above.
 3. **Optionally** add a line at the end specifying a commit hash:
    > "Check out commit `c01df2f` for this run."
-4. **Run it.** The AI will return a Markdown report. Save the report under `docs/validation/` in your project (or wherever your CI stores artifacts) for the audit trail.
+4. **Run it.** The AI will return a Markdown report. Save the report under `docs/validation/` in your project (e.g. `docs/validation/2026-07-03-linux-pass.md`) for the audit trail. Prior reports in that directory are useful for diffing.
 
 ## When To Re-Run
 
