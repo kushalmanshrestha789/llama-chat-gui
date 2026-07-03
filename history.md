@@ -4,6 +4,13 @@
 
 ---
 
+## 2026-07-03 — Tag: v0.2.0 — "Cross-platform support"
+
+- Created annotated tag `v0.2.0` pointing at `b03bc92`
+- Pushed to `origin` via SSH (no `gh` involvement, so the [[github-account-split]] doesn't block the tag itself)
+- Tag message includes: highlights, commits-since-v0.1.0 list, known follow-ups
+- GitHub **Release** page not created — that step needs `gh release create`, which is on the wrong account. The tag is in place; creating the Release is a follow-up that requires `gh auth login` as `kushalmanshrestha789` first.
+
 ## 2026-07-03 — Validation follow-up: fix ddgs + save baseline report
 
 **Commits:**

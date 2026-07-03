@@ -11,8 +11,8 @@
 **Repo:** https://github.com/kushalmanshrestha789/llama-chat-gui
 **Local path:** `/home/cipher/projects/llama-chat-gui`
 **Stack:** Python 3 · Tkinter (UI) · `llama-cli` subprocess (engine) · `pystray` (tray) · `psutil` (telemetry)
-**Last commit:** `572b413` — docs: save 2026-07-03 Linux validation report, add example filename to prompt
-**Last tag:** _none_
+**Last commit:** `b03bc92` — docs: update memory.md and history.md for fix #1 and validation report
+**Last tag:** `v0.2.0` — "Cross-platform support" (annotated, on `origin`)
 
 ---
 
@@ -69,6 +69,13 @@
 | `AI_VALIDATION_PROMPT.md` | structured prompt to verify the project on any target OS via an AI | ✅ Done in `b40e54b` |
 | `web_tools.py` (search chain) | prefer `duckduckgo_search` over `ddgs` to avoid the `primp` wheel fragility | ✅ Done in `666ecfc` (fixes the install-failure mode caught by the first validation run) |
 | `docs/validation/` | audit trail of validation runs | ✅ First report saved in `572b413` |
+| `v0.2.0` tag | annotated tag marking the "Cross-platform support" milestone | ✅ Tagged locally + pushed to `origin` |
+
+## Release status
+
+| Version | Status | Notes |
+|---|---|---|
+| v0.2.0 | ✅ Tagged, pushed to `origin` (commit `b03bc92`) | Cross-platform support; GitHub **Release** page NOT created (blocked on `gh` account split — see [[github-account-split]]) |
 
 ---
 
