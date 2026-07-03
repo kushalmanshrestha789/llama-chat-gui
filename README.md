@@ -53,6 +53,8 @@ User input → LlamaChatGUI.send_message()
 - `web_tools.py` (61 lines) — search and fetch wrappers
 - `requirements.txt` — `ddgs`, `requests`, `beautifulsoup4`, `psutil`, `Pillow`, `pystray`
 - `AGENT_GUIDE.md` — developer handover notes
+- `memory.md` — live project state (current direction, decisions, blockers)
+- `history.md` — chronological build log
 
 ## Data Storage
 
@@ -63,26 +65,4 @@ User input → LlamaChatGUI.send_message()
 | `~/.local/share/llama-chat/benchmarks/` | Benchmark CSV output |
 | `~/Documents/ChatArchive/llama_chat_project/history/` | Chat history (Markdown) |
 
-## Session History
-
-This project was built entirely through an AI coding assistant conversation on 2026-06-22.
-
-### Chronological build order
-
-1. Initial `LlamaController` + `SessionTab` + `LlamaChatGUI` separation with queue/reader-thread pattern
-2. Temperature, top-p sliders, system prompt editor, dynamic ctx_size
-3. Multi-session tabs via `SessionTab` + `ttk.Notebook`
-4. Stop generation button (`\x03` to stdin)
-5. Token counter / speed history graph / color-coded speed indicator
-6. Per-turn performance breakdown in sidebar
-7. Hardware telemetry (CPU, RAM, GPU via `psutil` + `nvidia-smi`)
-8. Benchmark CSV export with toggle
-9. Sample speed breakdown (regex in controller)
-10. Thinking filter: `[Start thinking]` / `[End thinking]` hidden by toggle
-11. Preset system: save/load named configs
-12. Streaming indicator
-13. Chat search: `Ctrl+F` with highlights and navigation
-14. Manual theme override: Auto / Light / Dark
-15. Right-click menu on chat
-16. Web search/fetch integration: `web_tools.py` module, `/web` `/search` `/fetch` commands, 🌐 Web button
-17. Tool calling: model autonomously invokes tools via `[TOOL_CALL]` syntax using `[TOOL_RESULT]` feedback
+> **Note:** Paths above are Linux/XDG. Windows equivalents are provided by `platform_compat.py` (see `AGENT_GUIDE.md` for the Windows port plan).
