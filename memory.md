@@ -18,15 +18,17 @@
 
 ## Active Direction
 
-**Porting to Windows.** The project was built Linux-first. Work in progress is a cross-platform refactor that introduces a `platform_compat.py` helper module and swaps Linux-specific assumptions (XDG paths, `gsettings` dark-mode, `nvidia-smi` path, `subprocess` flags) for portable equivalents.
+**Windows port landed in v0.2.0.** The cross-platform refactor (`platform_compat.py` + call-site swap) is complete and smoke-tested on Linux. The project now runs on both Linux and Windows from a single code path. No active development direction — open items are validation on real Windows hardware and a few small polish commits that can be picked up next session.
 
-**Execution order** (see `AGENT_GUIDE.md` and the Windows port plan in chat history for detail):
+**Execution order recap (all complete except the final handoff):**
 
-1. ~~Create `platform_compat.py` with path / theme / GPU helpers~~ ✅ Done in `64b8263`
-2. ~~Swap call sites in `llama_controller.py`, `llama_gui.py`, `web_tools.py`~~ ✅ Done in `c01df2f`
-3. ~~Smoke-test on Linux (must not regress)~~ ✅ Done in `c01df2f` (caught and fixed the `models_root()` bug)
-4. ~~Document Windows install/run in `README.md`~~ ✅ Done in `5a56196` (full cross-platform install + Windows notes + PyInstaller)
-5. **Hand off to Windows machine for visual validation** ← you are here
+1. ~~Create `platform_compat.py` with path / theme / GPU helpers~~ ✅ `64b8263`
+2. ~~Swap call sites in `llama_controller.py`, `llama_gui.py`, `web_tools.py`~~ ✅ `c01df2f`
+3. ~~Smoke-test on Linux (must not regress)~~ ✅ `c01df2f` (caught & fixed the `models_root()` bug)
+4. ~~Document Windows install/run in `README.md`~~ ✅ `5a56196` (full cross-platform install + Windows notes + PyInstaller)
+5. **Hand off to Windows machine for visual validation** ← still open
+
+**Next session should pick up:** either the first Windows run, or move on to the next project on the upload inventory (`~/clawd` is next up — see [[project-upload-inventory]]).
 
 ---
 
@@ -53,24 +55,19 @@
 
 | File | Role | Status |
 |------|------|--------|
-| `llama_gui.py` | Tkinter UI, `SessionTab`, `LlamaChatGUI`, `ThemeManager` | Will be refactored (path/theme helpers) |
-| `llama_controller.py` | `LlamaController` subprocess + queue lifecycle | Will be refactored (path constants, `CREATE_NO_WINDOW`) |
-| `web_tools.py` | `search_web()` (DuckDuckGo) + `fetch_url()` | Will drop the Linux-only `_SYSTEM_SITE` hack |
-| `requirements.txt` | `ddgs`, `requests`, `beautifulsoup4`, `psutil`, `Pillow`, `pystray` | Stable |
-| `README.md` | User-facing features + install | Will gain a "Windows" section |
-| `AGENT_GUIDE.md` | Developer handover / architecture | Will gain DPI / Windows pitfalls section |
-| `LICENSE` | MIT | ✅ Done |
-| `.gitignore` | Python + llama.cpp patterns | ✅ Done |
-| `memory.md` | This file — live project state | ✅ Now |
-| `history.md` | Chronological build log | ✅ Now |
-| `platform_compat.py` | cross-platform paths, dark-mode, nvidia-smi, subprocess flags | ✅ Done in `64b8263`, smoke-tested on Linux |
-| _(call-site swap)_ | replace hardcoded constants in the 3 source files with helpers | ✅ Done in `c01df2f` (also caught & fixed `models_root()` bug) |
-| _(Windows docs)_ | full cross-platform install + run + PyInstaller in README.md | ✅ Done in `5a56196` |
-| _(Windows validation)_ | first run on a real Windows machine; file bug-fix commits for any HiDPI / tray / theme issues | ⏳ Awaiting user handoff |
-| `AI_VALIDATION_PROMPT.md` | structured prompt to verify the project on any target OS via an AI | ✅ Done in `b40e54b` |
-| `web_tools.py` (search chain) | prefer `duckduckgo_search` over `ddgs` to avoid the `primp` wheel fragility | ✅ Done in `666ecfc` (fixes the install-failure mode caught by the first validation run) |
-| `docs/validation/` | audit trail of validation runs | ✅ First report saved in `572b413` |
-| `v0.2.0` tag | annotated tag marking the "Cross-platform support" milestone | ✅ Tagged locally + pushed to `origin` |
+| `llama_gui.py` | Tkinter UI, `SessionTab`, `LlamaChatGUI`, `ThemeManager` | ✅ Refactored, uses `platform_compat` |
+| `llama_controller.py` | `LlamaController` subprocess + queue lifecycle | ✅ Refactored, paths + `CREATE_NO_WINDOW` via helpers |
+| `web_tools.py` | `search_web()` (DuckDuckGo) + `fetch_url()` | ✅ Dropped `_SYSTEM_SITE` hack, prefers `duckduckgo_search` |
+| `requirements.txt` | `duckduckgo_search`, `requests`, `beautifulsoup4`, `psutil`, `Pillow`, `pystray`, `lxml`, `numpy` | ✅ Updated: `duckduckgo_search` primary, `ddgs` as fallback in code |
+| `README.md` | User-facing features + install | ✅ Full cross-platform install + Windows section + Validation link |
+| `AGENT_GUIDE.md` | Developer handover / architecture | Unchanged from initial drop — may need a Windows pitfalls section after first real Windows run |
+| `LICENSE` | MIT | ✅ |
+| `.gitignore` | Python + llama.cpp patterns | ✅ |
+| `memory.md` | This file — live project state | ✅ |
+| `history.md` | Chronological build log | ✅ |
+| `platform_compat.py` | cross-platform paths, dark-mode, nvidia-smi, subprocess flags | ✅ `64b8263` |
+| `AI_VALIDATION_PROMPT.md` | structured prompt to verify the project on any target OS via an AI | ✅ `b40e54b` |
+| `docs/validation/2026-07-03-linux-partial-pass.md` | first validation report (PARTIAL_PASS, env-only install failures) | ✅ `572b413` |
 
 ## Release status
 
