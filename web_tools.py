@@ -2,14 +2,29 @@
 
 
 def search_web(query, max_results=5):
-    """Search DuckDuckGo. Returns (success, formatted_string)."""
+    """Search DuckDuckGo. Returns (success, formatted_string).
+
+    Tries ``duckduckgo_search`` (the original, stable package) first,
+    and falls back to ``ddgs`` (a community rename) if the first is
+    not installed. Either one works — the API is identical because
+    ``ddgs`` is a rename of the same upstream project. The import
+    order matters: ``duckduckgo_search`` has a simpler dependency
+    chain (no Rust-based ``primp`` client) and is more reliable on
+    fresh Python installs.
+    """
     try:
-        from ddgs import DDGS
+        from duckduckgo_search import DDGS
     except ImportError:
         try:
-            from duckduckgo_search import DDGS
+            from ddgs import DDGS
         except ImportError:
-            return False, "Web search requires: pip install ddgs"
+            return False, (
+                "Web search requires either 'duckduckgo_search' or "
+                "'ddgs'. Install one with:\n"
+                "    pip install duckduckgo_search\n"
+                "or:\n"
+                "    pip install ddgs"
+            )
 
     try:
         with DDGS() as ddgs:
