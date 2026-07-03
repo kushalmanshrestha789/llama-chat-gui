@@ -45,6 +45,7 @@
 
 - **No Windows machine available for testing in this session.** README + `platform_compat.py` are in place; visual validation is the last open item. When the user runs it on Windows, any Tk HiDPI / theme / tray quirks should be filed as bug-fix commits and the resolution recorded in `AGENT_GUIDE.md` under a new "Windows" pitfalls section.
 - **Re-run validation on a machine with normal PyPI connectivity** to confirm `666ecfc` moves the verdict from `PARTIAL_PASS` to `PASS`. The headless container that produced the baseline report had timeouts on the `primp` wheel.
+- **GitHub Release page for v0.2.0 not created.** Tag is on `origin`; the Release page (with release notes, asset uploads) needs `gh release create`, which is blocked by [[github-account-split]]. Run `gh auth login` as `kushalmanshrestha789` first, then `gh release create v0.2.0 --notes-file <(git tag -l v0.2.0 --format='%(contents)')` (or paste the tag message manually).
 
 ---
 
