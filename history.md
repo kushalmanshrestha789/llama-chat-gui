@@ -4,6 +4,21 @@
 
 ---
 
+## 2026-07-03 — Validation follow-up: fix ddgs + save baseline report
+
+**Commits:**
+
+- `666ecfc` — fix: prefer duckduckgo_search over ddgs in web search fallback
+- `572b413` — docs: save 2026-07-03 Linux validation report, add example filename to prompt
+
+**Why this happened:** the validation run on commit `8efbbb1` (in the previous entry) reported `PARTIAL_PASS` because the `ddgs` package's `primp` wheel download timed out on the headless container, which cascaded into `pystray` not being installed either. Two of the three recommendations from that report were addressed:
+
+1. **`666ecfc`** — Reordered the `web_tools.py` import chain to try `duckduckgo_search` (the original, stable package, no Rust-based `primp` dependency) first, with `ddgs` as a fallback. Rewrote the missing-package error message to mention both options with both install commands. Updated `requirements.txt` to list `duckduckgo_search` as the primary dependency. Tested in a venv against all three scenarios (both / only-`ddgs` / neither) — all work.
+
+2. **`572b413`** — Saved the full validation report to `docs/validation/2026-07-03-linux-partial-pass.md` (107 lines, with action items and a cross-link to the fix in `666ecfc`). Also added a concrete filename example to `AI_VALIDATION_PROMPT.md` so future validators follow the naming convention.
+
+**Skipped:** the third recommendation (adding `pip install --no-deps ddgs` to the README) was reconsidered and dropped — that advice would confuse more users than it would help; the real fix is the dependency change in `666ecfc`.
+
 ## 2026-07-03 — AI validation prompt
 
 **Commit:** `b40e54b` — docs: add AI_VALIDATION_PROMPT.md and link from README

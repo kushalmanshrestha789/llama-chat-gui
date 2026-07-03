@@ -11,7 +11,7 @@
 **Repo:** https://github.com/kushalmanshrestha789/llama-chat-gui
 **Local path:** `/home/cipher/projects/llama-chat-gui`
 **Stack:** Python 3 · Tkinter (UI) · `llama-cli` subprocess (engine) · `pystray` (tray) · `psutil` (telemetry)
-**Last commit:** `b40e54b` — docs: add AI_VALIDATION_PROMPT.md and link from README
+**Last commit:** `572b413` — docs: save 2026-07-03 Linux validation report, add example filename to prompt
 **Last tag:** _none_
 
 ---
@@ -44,6 +44,7 @@
 ## Open Blockers
 
 - **No Windows machine available for testing in this session.** README + `platform_compat.py` are in place; visual validation is the last open item. When the user runs it on Windows, any Tk HiDPI / theme / tray quirks should be filed as bug-fix commits and the resolution recorded in `AGENT_GUIDE.md` under a new "Windows" pitfalls section.
+- **Re-run validation on a machine with normal PyPI connectivity** to confirm `666ecfc` moves the verdict from `PARTIAL_PASS` to `PASS`. The headless container that produced the baseline report had timeouts on the `primp` wheel.
 
 ---
 
@@ -66,6 +67,8 @@
 | _(Windows docs)_ | full cross-platform install + run + PyInstaller in README.md | ✅ Done in `5a56196` |
 | _(Windows validation)_ | first run on a real Windows machine; file bug-fix commits for any HiDPI / tray / theme issues | ⏳ Awaiting user handoff |
 | `AI_VALIDATION_PROMPT.md` | structured prompt to verify the project on any target OS via an AI | ✅ Done in `b40e54b` |
+| `web_tools.py` (search chain) | prefer `duckduckgo_search` over `ddgs` to avoid the `primp` wheel fragility | ✅ Done in `666ecfc` (fixes the install-failure mode caught by the first validation run) |
+| `docs/validation/` | audit trail of validation runs | ✅ First report saved in `572b413` |
 
 ---
 
